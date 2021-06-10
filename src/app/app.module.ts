@@ -7,6 +7,10 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { CabeceraComponent } from './components/cabecera/cabecera.component';
 import { BodyComponent } from './components/body/body.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { TipoDocsComponent } from './components/masterTablas/tipo-docs/tipo-docs.component';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,10 +19,14 @@ import { MenuComponent } from './components/menu/menu.component';
     CabeceraComponent,
     BodyComponent,
     MenuComponent,
+    TipoDocsComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
