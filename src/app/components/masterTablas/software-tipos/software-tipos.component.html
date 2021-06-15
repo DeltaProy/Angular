@@ -1,0 +1,169 @@
+<!--TIPOS SOFT-->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Tipos de Softwares</h5>
+                    <p style="color: gray; font-weight: bold; float: right; cursor: pointer;" data-toggle="modal"
+                        href="#modal-form1" (click)="registrotiposoft.reset()">Nuevo registro</p>
+
+                    <div id="modal-form1" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span><span
+                                                    class="sr-only">Cerrar</span></button>
+                                            <h3 class="m-t-none m-b">Nuevo tipo de software</h3>
+
+                                            <form role="form" (ngSubmit)="guardarTipoSoft()" [formGroup]="registrotiposoft">
+                                                <div class="form-group"><label>Descripción</label> <input type="text"
+                                                        placeholder="Descripcion del tipo de software" class="form-control"
+                                                        formControlName="destiposoft"></div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-secondary m-t-n-xs" type="button"
+                                                        data-dismiss="modal"><strong>Cerrar</strong></button>
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                        type="submit"
+                                                        [disabled]="!registrotiposoft.valid"><strong>Guardar</strong></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tipossoft">
+                                    <td>{{item.idtiposoft}}</td>
+                                    <td>{{item.destiposoft}}</td>
+                                    <td style="text-align: center; color: gray; font-weight: bold; cursor: pointer;"
+                                        data-toggle="modal" href="#modal-form1" (click)="llenarCamposTipoSoft(item)">Editar</td>
+                                    <td style="text-align: center; color: gray; font-weight: bold; cursor: pointer;"
+                                        (click)="eliminarTipoSoft(item)">Eliminar</td>
+                                </tr>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--SOFTWARES-->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Softwares</h5>
+                    <p style="color: gray; font-weight: bold; float: right; cursor: pointer;" data-toggle="modal"
+                        href="#modal-form2" (click)="registrosoft.reset()">Nuevo registro</p>
+
+                    <div id="modal-form2" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span><span
+                                                    class="sr-only">Cerrar</span></button>
+                                            <h3 class="m-t-none m-b">Nuevo Software</h3>
+
+                                            <form role="form" (ngSubmit)="guardarSoft()" [formGroup]="registrosoft">
+                                                
+                                                <div class="form-group"><label>Descripción</label> <input type="text"
+                                                        placeholder="Descripcion del Software" class="form-control"
+                                                        formControlName="dessoft">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Tipo de Software</label> 
+                                                    <div>
+                                                        <select data-placeholder="Elija un tipo de software" class="chosen-select" tabindex="2" formControlName="idtiposoft">
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let item of tipossoft" [value]="item.idtiposoft">{{item.destiposoft}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-secondary m-t-n-xs" type="button"
+                                                        data-dismiss="modal"><strong>Cerrar</strong></button>
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                        type="submit"
+                                                        [disabled]="!registrosoft.valid"><strong>Guardar</strong></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="ibox-content">
+
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Tipo de Software</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of softs">
+                                    <td>{{item.idsoft}}</td>
+                                    <td>{{item.idtiposoft}}</td>
+                                    <td>{{item.dessoft}}</td>
+                                    <td style="text-align: center; color: gray; font-weight: bold; cursor: pointer;"
+                                        data-toggle="modal" href="#modal-form2" (click)="llenarCamposSoft(item)">Editar</td>
+                                    <td style="text-align: center; color: gray; font-weight: bold; cursor: pointer;"
+                                        (click)="eliminarSoft(item)">Eliminar</td>
+                                </tr>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Tipo de Software</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

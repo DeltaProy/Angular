@@ -11,6 +11,13 @@ import { TipoDocsComponent } from './components/masterTablas/tipo-docs/tipo-docs
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EmpresasComponent } from './components/masterTablas/empresas/empresas.component';
+import { TipoDireccionComponent } from './components/masterTablas/tipo-direccion/tipo-direccion.component';
+import { TipoTelefonoComponent } from './components/masterTablas/tipo-telefono/tipo-telefono.component';
+import { TipoEmailsComponent } from './components/masterTablas/tipo-emails/tipo-emails.component';
+import { TableModule } from 'primeng/table';
+import { AreasCargosComponent } from './components/masterTablas/areas-cargos/areas-cargos.component';
+import { SoftwareTiposComponent } from './components/masterTablas/software-tipos/software-tipos.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +27,20 @@ import { ReactiveFormsModule } from '@angular/forms';
     BodyComponent,
     MenuComponent,
     TipoDocsComponent,
+    EmpresasComponent,
+    TipoDireccionComponent,
+    TipoTelefonoComponent,
+    TipoEmailsComponent,
+    AreasCargosComponent,
+    SoftwareTiposComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

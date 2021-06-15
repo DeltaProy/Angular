@@ -11,6 +11,7 @@ import { BackendServiceService } from '../../../services/backend-service.service
 export class TipoDocsComponent implements OnInit {
 
   tiposDocs: TipoDoc[] = [];
+
   isEdit: boolean = false;
   itemId!: number;
 
@@ -22,7 +23,7 @@ export class TipoDocsComponent implements OnInit {
   constructor(
     private backendService: BackendServiceService,
     private fb: FormBuilder
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.actualizarTiposDocs();
