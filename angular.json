@@ -31,12 +31,12 @@
               "src/sont-awesome"
             ],
             "styles": [
+              "src/font-awesome/css/font-awesome.css",
+              "src/css/bootstrap.min.css",
               "src/styles.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "src/css/bootstrap.min.css",
-              "src/font-awesome/css/font-awesome.css",
               "src/css/plugins/toastr/toastr.min.css",
               "src/js/plugins/gritter/jquery.gritter.css",
               "src/css/animate.css",

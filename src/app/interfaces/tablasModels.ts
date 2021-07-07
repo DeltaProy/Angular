@@ -13,7 +13,7 @@ export interface Empresa{
 export interface Area{
     idarea: number;
     desarea: string;
-    cargos: any[];
+    cargos: Cargo[];
 }
 
 export interface Cargo{
@@ -46,4 +46,36 @@ export interface TipoTelf{
 export interface TipoEmail{
     idtipoemail: number;
     destipoemail: string;
+}
+
+export interface Peticion{
+    idpeticion?: number;
+    titulo: string;
+    despeticion: string;
+    idarea: number;
+    idusuario: number | null;
+    idasignado?: number;
+    estado: string;
+    detalles: PeticionDet[];
+}
+
+export interface PeticionDet{
+    idpeticion: number;
+    fecha_mov: Date;
+    id_usuario: number;
+    estado_ant: string | null;
+    estado_act: string;
+    observacion: string;
+}
+
+export interface Personal{
+    idpersonal: number,
+    idtipodoc: number,
+    nrodoc: string,
+    nomper: string,
+    apeper: string,
+    idempresa: number,
+    idarea: number,
+    idcargo: number,
+    fotografia: string
 }

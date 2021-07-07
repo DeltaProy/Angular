@@ -1,0 +1,11 @@
+<div>
+    <strong>
+        {{peticion.titulo}}
+    </strong>
+    <div>
+        <strong>Fecha:</strong> {{peticion.detalles[0]?.fecha_mov | date}} - <strong>Area:</strong>
+        {{area?.desarea}} - <strong>Descripcion:</strong> {{peticion.despeticion}} - <strong>Fecha
+            ultimo cambio:</strong> {{peticion.detalles[peticion.detalles.length - 1]?.fecha_mov |
+        date}} - <strong>Estado:</strong> {{peticion.estado}}
+    </div>
+</div>

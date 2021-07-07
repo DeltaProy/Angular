@@ -1,0 +1,17 @@
+<div>
+    <strong>
+        {{peticion.titulo}}
+    </strong>
+    <div>
+        <strong>Fecha:</strong> {{peticion.detalles[0]?.fecha_mov | date}} -
+        <strong>Descripcion:</strong> {{peticion.despeticion}} - <strong>Fecha
+            ultimo cambio:</strong> {{peticion.detalles[peticion.detalles.length - 1]?.fecha_mov |
+        date}} - <strong>Estado:</strong> {{peticion.estado}} - <strong>Asignado a:</strong>
+        {{asignadoNombre}}
+    </div>
+    <div class="m-t">
+        <div class="btn-group">
+            <button type="button" (click)="completarPeticion()" class="btn btn-w-m btn-primary">Completar</button>
+        </div>
+    </div>
+</div>

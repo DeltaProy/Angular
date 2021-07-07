@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from "@angular/common/http";
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { Area, Peticion, PeticionDet, Personal } from '../interfaces/tablasModels';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,15 @@ export class BackendServiceService {
 
   baseURL: string = environment.baseURL;
 
+  userId:number | null = null;
+ 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    if(localStorage.getItem('user')){
+      this.userId = JSON.parse(localStorage.getItem('user')!).idUser;
+    }
+  }
 
   //Tipos docs CRUD
   listarTiposDocs():Observable<any>{
@@ -39,6 +46,9 @@ export class BackendServiceService {
   //Areas CRUD
   listarAreas():Observable<any>{
     return this.http.get(`${this.baseURL}/area/listar`);
+  }
+  listarArea(idarea:number):Observable<any>{
+    return this.http.get(`${this.baseURL}/area/listarArea/${idarea}`);
   }
   guardarAreas(item:any){
     return this.http.post(`${this.baseURL}/area/guardar`, item);
@@ -115,6 +125,48 @@ export class BackendServiceService {
   }
   eliminarTiposEmail(id:number){
     return this.http.delete(`${this.baseURL}/tiposemails/eliminar/${id}`, {responseType: 'text'});
+  }
+  
+  //Peticiones
+  listarPeticionesUsuario():Observable<any>{
+    if(this.userId){
+      return this.http.get(`${this.baseURL}/peticion/listarUsuario/${this.userId}`);
+    } else{
+      return of('Error, no existe el usuario');
+    }
+  }
+  listarPeticionesPendientes():Observable<any>{
+    if(this.userId){
+      return this.http.get(`${this.baseURL}/peticion/listarPendientes/${this.userId}`)
+    } else{
+      return of(null);
+    }
+  }
+  listarTareasPeticion():Observable<any>{
+    if(this.userId){
+      return this.http.get(`${this.baseURL}/peticion/listarAsignado/${this.userId}`)
+    } else{
+      return of(null);
+    }
+  }
+  guardarPeticion(peticion:Peticion):Observable<any>{
+    return this.http.post(`${this.baseURL}/peticion/guardar`, peticion);
+  }
+  actualizarPeticion(peticion:Peticion):Observable<any>{
+    return this.http.put(`${this.baseURL}/peticion/actualizar`, peticion);
+  }
+
+  //Peticiones Detalles
+  guardarPeticionDet(peticionDet:PeticionDet):Observable<any>{
+    return this.http.post(`${this.baseURL}/peticionDet/guardar`, peticionDet);
+  }
+
+  //Personal CRUD
+  buscarPersonal(idpersonal:number):Observable<any>{
+    return this.http.get(`${this.baseURL}/personal/buscar/${idpersonal}`);
+  }
+  listaPersonalPorArea(idarea:number):Observable<any>{
+    return this.http.get(`${this.baseURL}/personal/listarArea/${idarea}`);
   }
   
 }

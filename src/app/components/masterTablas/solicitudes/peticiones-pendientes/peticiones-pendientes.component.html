@@ -1,0 +1,21 @@
+<div>
+    <strong>
+        {{peticion.titulo}}
+    </strong>
+    <div>
+        <strong>Fecha:</strong> {{peticion.detalles[0]?.fecha_mov | date}} - <strong>Descripcion:</strong> {{peticion.despeticion}} - <strong>Fecha
+            ultimo cambio:</strong> {{peticion.detalles[peticion.detalles.length - 1]?.fecha_mov |
+        date}} - <strong>Estado:</strong> {{peticion.estado}} - <strong>Asignado a:</strong> {{asignadoNombre}}
+    </div>
+    <div class="m-t">
+        <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Asignar <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a *ngFor="let persona of areaPersonal" (click)="asignarPersona(persona)">{{persona.nomper}} {{persona.apeper}}</a></li>
+            </ul>
+        </div>
+        <div class="inline m-l">
+            <h4>{{asignadoNombre}}</h4>
+        </div>
+    </div>
+</div>
