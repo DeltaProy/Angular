@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Peticion } from '../../../../interfaces/tablasModels';
+import { Peticion, PeticionDet } from '../../../../interfaces/tablasModels';
 import { BackendServiceService } from '../../../../services/backend-service.service';
 
 @Component({
@@ -27,7 +27,28 @@ export class TareasPeticionComponent implements OnInit {
   }
 
   completarPeticion(){
-    //TODO Cuando el colaborador completa la peticion la peticion cambiara a estado completada (significa que faltaria la revision del usuario) si el usuario da conformidad la tarea pasaria a estado finalizada.
+    this.peticion.estado = 'COMPLETADA';
+    this.backendService.actualizarPeticion(this.peticion).subscribe(
+      respPeticion => {
+        const peticionDetalle: PeticionDet = {
+          idpeticion: respPeticion.idpeticion,
+          fecha_mov: new Date(),
+          id_usuario: respPeticion.idusuario,
+          estado_ant: respPeticion.detalles[respPeticion.detalles.length - 1].estado_act,
+          estado_act: respPeticion.estado,
+          observacion: `Tarea completada por ${this.asignadoNombre} con id: ${this.peticion.idasignado}`
+        }
+        this.backendService.guardarPeticionDet(peticionDetalle).subscribe(
+          detalle => {
+            
+            this.peticion = respPeticion;
+            this.ngOnInit();
+            
+          },
+          err => {console.log(err)}
+        )
+      }
+    )
   }
 
 }

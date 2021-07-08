@@ -8,4 +8,15 @@
             ultimo cambio:</strong> {{peticion.detalles[peticion.detalles.length - 1]?.fecha_mov |
         date}} - <strong>Estado:</strong> {{peticion.estado}}
     </div>
+    <div class="m-t" *ngIf="!(peticion.estado == 'COMPLETADA')">
+        <div class="btn-group">
+            <button type="button" (click)="cancelarPeticion()" class="btn btn-w-m btn-danger">Cancelar</button>
+        </div>
+    </div>
+    <div class="m-t" *ngIf="peticion.estado == 'COMPLETADA'">
+        <div class="btn-group">
+            <button type="button" (click)="finalizarPeticion()" class="btn btn-w-m btn-primary">Finalizar</button>
+            <!--<button type="button" [disabled]="peticion.estado == 'COMPLETADA'" (click)="nofinalizarPeticion()" class="btn btn-w-m btn-primary">no finalizar</button>-->
+        </div>
+    </div>
 </div>

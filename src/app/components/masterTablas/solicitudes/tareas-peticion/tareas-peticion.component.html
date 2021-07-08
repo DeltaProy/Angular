@@ -11,7 +11,7 @@
     </div>
     <div class="m-t">
         <div class="btn-group">
-            <button type="button" (click)="completarPeticion()" class="btn btn-w-m btn-primary">Completar</button>
+            <button type="button" [disabled]="peticion.estado == 'COMPLETADA'" (click)="completarPeticion()" class="btn btn-w-m btn-primary">Completar</button>
         </div>
     </div>
 </div>
