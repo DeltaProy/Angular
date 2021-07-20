@@ -165,6 +165,9 @@ export class BackendServiceService {
   buscarPersonal(idpersonal:number):Observable<any>{
     return this.http.get(`${this.baseURL}/personal/buscar/${idpersonal}`);
   }
+  buscarPersonalPorNombre(nomper:string, apeper:string):Observable<any>{
+    return this.http.get(`${this.baseURL}/personal/buscar/${nomper}/${apeper}`);
+  }
   listaPersonalPorArea(idarea:number):Observable<any>{
     return this.http.get(`${this.baseURL}/personal/listarArea/${idarea}`);
   }

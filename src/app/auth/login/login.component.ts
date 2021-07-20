@@ -11,8 +11,8 @@ import { BackendServiceService } from '../../services/backend-service.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = this.fb.group({
-    user: [, Validators.required],
-    password: [, Validators.required]
+    nombre: [, Validators.required],
+    apellido: [, Validators.required]
   })
 
   constructor(
@@ -27,16 +27,20 @@ export class LoginComponent implements OnInit {
   ingresar(event:Event){
     event.preventDefault();
 
-    const userData = {
-      user: this.loginForm.controls.user.value,
-      idUser: 2,//Este valor es de prueba, se debe extraer el id de una base de datos del personal
-      password: this.loginForm.controls.password.value
-    }
-
-    this.backendService.userId = userData.idUser;
-
-    localStorage.setItem('user', JSON.stringify(userData));
-    this.loginForm.reset();
-    this.router.navigate(['/home']);
+    const nomper = this.loginForm.controls.nombre.value;
+    const apeper = this.loginForm.controls.apellido.value;
+    this.backendService.buscarPersonalPorNombre(nomper, apeper).subscribe(
+      resp => {
+        const userData = {
+          nombre: nomper,
+          idUser: resp.idpersonal,
+          apellido: apeper
+        }
+        this.backendService.userId = resp.idpersonal;
+        localStorage.setItem('user', JSON.stringify(userData));
+        this.loginForm.reset();
+        this.router.navigate(['/home']);
+      }
+    )
   }
 }
