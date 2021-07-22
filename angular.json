@@ -19,7 +19,7 @@
           "options": {
             "outputPath": "dist/deltaIntranet",
             "index": "src/index.html",
-            "main": "./main.ts",
+            "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
