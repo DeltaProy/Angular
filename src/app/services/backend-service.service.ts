@@ -9,7 +9,7 @@ import { Area, Peticion, PeticionDet, Personal } from '../interfaces/tablasModel
 })
 export class BackendServiceService {
 
-  baseURL: string = environment.baseURL;
+  baseURL: string = "http://173.255.202.95:8085" //environment.baseURL;
 
   userId:number | null = null;
  
