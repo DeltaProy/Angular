@@ -26,7 +26,7 @@ import { APP_BASE_HREF } from '@angular/common';
     AuthModule,
     ComponentsModule
   ],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/deltaIntranet/'}],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
