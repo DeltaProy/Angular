@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, of } from 'rxjs';
-import { Area, Peticion, PeticionDet, Personal } from '../interfaces/tablasModels';
+import { Area, Peticion, PeticionDet, Personal, GuardarProyecto, ProyectoHomologado, ProyectoRecurso } from '../interfaces/tablasModels';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendServiceService {
 
-  baseURL: string = "http://173.255.202.95:8085" //environment.baseURL;
+  baseURL: string = "http://localhost:8085" //environment.baseURL http://173.255.202.95:8085;
 
   userId:number | null = null;
  
@@ -171,5 +171,60 @@ export class BackendServiceService {
   listaPersonalPorArea(idarea:number):Observable<any>{
     return this.http.get(`${this.baseURL}/personal/listarArea/${idarea}`);
   }
+  listarPersonal():Observable<any>{
+    return this.http.get(`${this.baseURL}/personal/listar`);
+  }
   
+  //Proyectos CRUD
+  listarProyectos():Observable<any>{
+    return this.http.get(`${this.baseURL}/proyectos/listar`);
+  }
+  existeProyecto(nombre:string):Observable<any>{
+    return this.http.get(`${this.baseURL}/proyectos/existe`, {params:{"nombreproyecto":nombre}});
+  }
+  listarProyectosPorResponsable(idresponsable:number):Observable<any>{
+    return this.http.get(`${this.baseURL}/proyectos/listar/${idresponsable}`);
+  }
+  guardarProyecto(fd: FormData):Observable<any>{
+    return this.http.post(`${this.baseURL}/proyectos/guardar`, fd)
+  }
+  actualizarProyecto(fd: FormData):Observable<any>{
+    return this.http.put(`${this.baseURL}/proyectos/actualizar`, fd)
+  }
+
+  //Proyecto Gantt CRUD
+  guardarProyectoGantt(fd:FormData):Observable<any>{
+    return this.http.post(`${this.baseURL}/proyectoGantt/guardar`, fd)
+  }
+
+  
+  //Proyecto Homologados
+  listarProyectoHomologadosPorIdProyecto(idproyecto: number):Observable<any>{
+    return this.http.get(`${this.baseURL}/proyectoHomologados/listar/${idproyecto}`)
+  }
+  guardarProyectoHomologados(fd:FormData):Observable<any>{
+    return this.http.post(`${this.baseURL}/proyectoHomologados/guardar`, fd)
+  }
+  actualizarProyectoHomologados(ph:any){
+    return this.http.post(`${this.baseURL}/proyectoHomologados/actualizar`, ph).toPromise();
+  }
+
+  //Proyecto Tareas
+  guardarProyectoTareas(fd:FormData):Observable<any>{
+    return this.http.post(`${this.baseURL}/proyectoTareas/guardar`, fd, {responseType: 'text'})
+  }
+  
+  //Proyecto Recursos
+  listarProyectoRecursosPorIdProyecto(idproyecto: number):Observable<any>{
+    return this.http.get(`${this.baseURL}/proyectoRecursos/listar/${idproyecto}`);
+  }
+  guardarProyectoRecursos(pr:ProyectoRecurso):Observable<any>{
+    return this.http.post(`${this.baseURL}/proyectoRecursos/guardar`, pr);
+  }
+  actualizarProyectoRecurso(pr:ProyectoRecurso){
+    return this.http.put(`${this.baseURL}/proyectoRecursos/actualizar`, pr);
+  }
+  eliminarProyectoRecursos(idproyecto: number, idpersonal: number):Observable<any>{
+    return this.http.delete(`${this.baseURL}/proyectoRecursos/eliminar/${idproyecto}/${idpersonal}`, {responseType: 'text'});
+  }
 }

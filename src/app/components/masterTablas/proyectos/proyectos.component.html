@@ -1,0 +1,220 @@
+<div class="wrapper wrapper-content">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Listado de Proyectos</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="i-checks"><label> <input type="checkbox" value="1" (click)="soloActivos($event)">
+                            <i></i> Solo activos </label></div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>NOMBRE DEL PROYECTO</th>
+                                <th>CLIENTE</th>
+                                <th>FECHA INICIO</th>
+                                <th>FECHA TERMINO</th>
+                                <th>TERMINO REAL</th>
+                                <th>UTILIDAD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let proyecto of proyectos">
+
+                                <td>{{proyecto.idproyecto}}</td>
+                                <td>{{proyecto.desproyecto}}</td>
+                                <td>{{getNombreEmpresa(proyecto.idEmpresa)}}</td>
+                                <td>{{proyecto.fecini | date}}</td>
+                                <td>{{proyecto.fecfin | date}}</td>
+                                <td>{{proyecto.fecfinreal | date}}</td>
+                                <td><a (click)="mostrarRecursos(proyecto)">Administrar Recursos</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <form role="form" class="form-horizontal" [formGroup]="nuevoProyectoForm"
+                        (ngSubmit)="submitProyecto()">
+                        <div class="row" style="width: 100%;">
+
+                            <div class="form-group"><label class="col-sm-3 control-label">Archivo Gantt (mpp):</label>
+
+                                <div class="col-sm-9">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <span class="btn btn-default btn-file"><input type="file" name="archivoProyecto"
+                                                formControlName="archivoProyecto"
+                                                (change)="seleccionarFile($event)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cliente:</label>
+
+                                <div class="col-sm-9">
+                                    <select class="form-control m-b" name="cliente" formControlName="cliente">
+                                        <option value="">Seleccionar...</option>
+                                        <option *ngFor="let empresa of empresas" [value]="empresa.idempresa">
+                                            {{empresa.razonsocial}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Nombre del proyecto:</label>
+                                <div class="col-sm-9">
+                                    <input name="nombreProyecto" type="text" placeholder="proyecto..."
+                                        data-provide="typeahead" data-source='["item 1","item 2","item 3"]'
+                                        class="form-control" formControlName="nombreProyecto" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <button data-toggle="modal" data-target="#modal-form" class="btn btn-sm btn-primary pull-right"
+                                    type="submit" [disabled]="!nuevoProyectoForm.valid"><strong>Subir</strong>
+                                </button>
+                                
+                                <div id="modal-form" class="modal fade" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="row">
+
+                                                    <!-- 0: LOADING -->
+                                                    <div *ngIf="modalContent === 0">
+                                                        <div class="spiner-example">
+                                                            <div class="sk-spinner sk-spinner-wave">
+                                                                <div class="sk-rect1"></div>
+                                                                <div class="sk-rect2"></div>
+                                                                <div class="sk-rect3"></div>
+                                                                <div class="sk-rect4"></div>
+                                                                <div class="sk-rect5"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p>Subiendo proyecto... Esto puede tomar unos minutos</p>
+                                                        <p>{{subiendoTexto}}</p>
+                                                    </div>
+                                                    <!-- 0: LOADING END -->
+                                                    
+                                                    <!-- 1: HOMOLOGADOS -->
+                                                    <div *ngIf="proyectoHomologados.length != 0 && modalContent === 1" class="col">
+
+                                                        <h3 class="m-t-none m-b">Recursos del proyecto</h3>
+
+                                                        <p>Relacion el recurso con su respectivo personal</p>
+
+                                                        <form role="form" (ngSubmit)="submitPH()" >
+                                                            <div *ngFor="let ph of proyectoHomologados">
+                                                                <div *ngIf="ph.nomcorto != ''">
+                                                                    <div>
+                                                                        <label class="col-sm-6 control-label">{{ph.nomcorto}}:</label>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <select (change)="changeValorEnProyectoHomologado($event, ph)" class="form-control m-b" name="proyectoHomologado">
+                                                                            <option>Seleccionar...</option>
+                                                                            <option *ngFor="let persona of personal" [value]="persona.idpersonal">{{persona.nomper}} {{persona.apeper}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div>
+                                                                <button
+                                                                    class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                                    type="submit" [disabled]="!phIsValid()"><strong>Subir</strong></button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- 1: HOMOLOGADOS END -->
+
+                                                    <!-- 2: SUBIDA EXITOSA -->
+                                                    <div *ngIf="modalContent === 2">
+                                                        <h2>El proyecto se subio con exito.</h2>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-xs" type="button"
+                                                            data-dismiss="modal"><strong>Listo!</strong></button>
+                                                    </div>
+                                                    <!-- 2: SUBIDA EXITOSA END -->
+
+                                                    <!-- 3: NOMBRE EXISTENTE -->
+                                                    <div *ngIf="modalContent === 3">
+                                                        <h2>El nombre de proyecto ya existe. Por favor elija otro.</h2>
+                                                        <button class="btn btn-sm btn-primary m-t-xs" type="button"
+                                                            data-dismiss="modal"><strong>Cerrar</strong></button>
+                                                    </div>
+                                                    <!-- 3: NOMBRE EXISTENTE END -->
+
+                                                    <!-- 4: ACTUALIZAR -->
+                                                    <div *ngIf="modalContent === 4">
+                                                        <h2>El proyecto ya existe. Desea actualizarlo?.</h2>
+                                                        <button class="btn btn-sm btn-primary m-t-xs" type="button" (click)="actualizarProyecto()"><strong>Si,
+                                                                actualizar</strong></button>
+                                                        <button class="btn btn-sm btn-primary m-t-xs m-l" type="button" data-dismiss="modal"><strong>No,
+                                                                cerrar</strong></button>
+                                                    </div>
+                                                    <!-- 4: ACTUALIZAR END -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="proyectoRecursos.length != 0">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Recursos del proyecto: {{proyectoActivo}}</h5>
+                    <div class="ibox-tools">
+                        <a class="close-link" (click)="sacarRecursos()">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+            
+                <div class="ibox-content">
+                    <div class="row" >
+                        
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr *ngFor="let pr of proyectoRecursos">
+    
+                                    <td>
+                                        <h2 class="control-label" style="font-weight: bolder;">{{getNombrePersonal(pr.idpersonal)}}:</h2>
+                                        <button class="btn btn-default btn-circle" type="button" (click)="deletePR(pr.idproyecto, pr.idpersonal)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <label class="control-label">Fecha de inicio: <span *ngIf="pr.fecini_lab != null">{{pr.fecini_lab | date}}</span></label>
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="dd/mm/aaaa" (keyup)="changeFecha($event, pr, 'ini')"> 
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label class="control-label">Fecha de fin: <span *ngIf="pr.fecini_lab != null">{{pr.fecfin_lab | date}}</span></label>
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="dd/mm/aaaa" (keyup)="changeFecha($event, pr, 'fin')">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

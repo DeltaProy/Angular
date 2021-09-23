@@ -79,3 +79,24 @@ export interface Personal{
     idcargo: number,
     fotografia: string
 }
+
+export interface GuardarProyecto{
+
+    idempresa: number,
+    nombreproyecto: string
+}
+
+export interface ProyectoHomologado{
+    idproyecto: number,
+    nomcorto: string,
+    idpersonal: number | null,
+}
+
+export interface ProyectoRecurso{
+    idproyecto: number,
+    idpersonal: number,
+    tipo_recurso: string,
+    fecini_lab: Date | null,
+    fecfin_lab: Date | null,
+    fecfin_real: Date | null
+}

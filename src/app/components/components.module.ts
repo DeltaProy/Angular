@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ComponentsRoutingModule } from './components-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -15,10 +16,15 @@ import { TipoEmailsComponent } from './masterTablas/tipo-emails/tipo-emails.comp
 import { AreasCargosComponent } from './masterTablas/areas-cargos/areas-cargos.component';
 import { SoftwareTiposComponent } from './masterTablas/software-tipos/software-tipos.component';
 import { SolicitudesComponent } from './masterTablas/solicitudes/solicitudes.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PeticionComponent } from './masterTablas/solicitudes/peticion/peticion.component';
 import { PeticionesPendientesComponent } from './masterTablas/solicitudes/peticiones-pendientes/peticiones-pendientes.component';
 import { TareasPeticionComponent } from './masterTablas/solicitudes/tareas-peticion/tareas-peticion.component';
+import { ProyectosComponent } from './masterTablas/proyectos/proyectos.component';
+
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs);
 
 
 @NgModule({
@@ -38,12 +44,16 @@ import { TareasPeticionComponent } from './masterTablas/solicitudes/tareas-petic
     SolicitudesComponent,
     PeticionComponent,
     PeticionesPendientesComponent,
-    TareasPeticionComponent
+    TareasPeticionComponent,
+    ProyectosComponent
   ],
   imports: [
     CommonModule,
     ComponentsRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }]
 })
 export class ComponentsModule { }

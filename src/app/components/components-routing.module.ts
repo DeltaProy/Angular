@@ -9,6 +9,7 @@ import { AreasCargosComponent } from './masterTablas/areas-cargos/areas-cargos.c
 import { SoftwareTiposComponent } from './masterTablas/software-tipos/software-tipos.component';
 import { SolicitudesComponent } from './masterTablas/solicitudes/solicitudes.component';
 import { HomeComponent } from './home/home.component';
+import { ProyectosComponent } from './masterTablas/proyectos/proyectos.component';
 
 const routes: Routes = [
 
@@ -25,6 +26,8 @@ const routes: Routes = [
       {path: "master/tipoemails", component: TipoEmailsComponent},
       
       {path: "solicitudes", component: SolicitudesComponent},
+
+      {path: "proyectos", component: ProyectosComponent},
 
       {path: "**", redirectTo: "master/tipodocs"}
     ]
