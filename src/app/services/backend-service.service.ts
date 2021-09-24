@@ -9,7 +9,7 @@ import { Area, Peticion, PeticionDet, Personal, GuardarProyecto, ProyectoHomolog
 })
 export class BackendServiceService {
 
-  baseURL: string = "http://localhost:8085" //environment.baseURL http://173.255.202.95:8085;
+  baseURL: string = "http://173.255.202.95:8085" //environment.baseURL http://173.255.202.95:8085;
 
   userId:number | null = null;
  
